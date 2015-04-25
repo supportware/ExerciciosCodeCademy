@@ -1,0 +1,55 @@
+/*
+Bip Bip
+O chefe olha para seu pager e vê que a Registradora 8 precisa de assistência.
+Eles escanearam um item vezes demais e precisam anular a última transação.
+Então, ele se volta para você e pergunta: "OK, ninja do JavaScript! O que fazemos agora?".
+Instruções:
+Precisamos manter o controle sobre qual foi o valor da última transação.
+Modifique o método add para manter o registro da última transação. Isso deve
+ser feito em uma nova propriedade, lastTransactionAmount. Adicione um método
+chamado voidLastTransaction que subtraia o valor da última transação de total.
+Então, uso o novo método para anular o último item que escaneamos. Finalmente,
+escaneia apenas 3 unidades do mesmo item.
+
+DICA:
+Lembre-se que quando você adiciona uma propriedade ou método a um objeto em notação literal,
+deve acompanhá-los com uma , (vírgula) a menos que seja o último item do objeto.
+Como você atualizaria lastTransactionAmount? Sempre que add é executado, você deve mudar
+o valor de lastTransactionAmount para itemCost de modo que lastTransactionAmount sempre
+se refira ao valor da última transação.
+
+*/
+
+
+var cashRegister = {
+    total:0,
+    lastTransactionAmout:0,
+    add: function(itemCost) {
+        this.total +=  itemCost;
+    },
+    scan: function(item,quantity) {
+        switch (item) {
+        case "ovos": this.add(0.98 * quantity); break;
+        case "leite": this.add(1.23 * quantity); break;
+        case "revista": this.add(4.99 * quantity); break;
+        case "chocolate": this.add(0.45 * quantity); break;
+        }
+        return true;
+    },
+    voidLastTransaction: function(itemCost,quantity){
+        this.lastTransactionAmount = this.total - (itemCost * quantity);
+    }
+    
+    
+};
+
+cashRegister.scan('ovos',1);
+cashRegister.scan('leite',1);
+cashRegister.scan('revista',1);
+cashRegister.scan('chocolate',4);
+
+//Anule a ultima transacao e entao adicione 3
+cashRegister.voidLastTransaction('chocolate',4);
+cashRegister.scan('chocolate',3);
+//Mostre o total da conta
+console.log('Your bill is '+cashRegister.total);
